@@ -77,9 +77,6 @@ if selected_corner:
         
         st.write('---')
 
-        with st.expander("Ver Info de miembros seleccionados"):
-            # Muestra de disponibilidad horaria para los miembros filtrados
-            st.dataframe(filtered_data)
 
         horas = ['6AM', '7AM', '8AM', '9AM', '10AM', '11AM', '12M',
                         '1PM', '2PM', '3PM', '4PM', '5PM', '6PM', '7PM',
@@ -120,20 +117,36 @@ if selected_corner:
             # Mostrar la matriz de disponibilidad
             st.write('Matriz de Disponibilidad')
             st.write(matriz_df)
-            days_tabs = st.tabs(selected_days)
+            
 
+            # Convertir la matriz de disponibilidad en un DataFrame
+            matriz_df = pd.DataFrame(matriz_disponibilidad, columns=horas, index=selected_days)
 
-            # Carga de la hoja de disponibilidad del día seleccionado
-            for i,tab in enumerate(days_tabs):
-                with tab:
-                    day_df = pd.read_excel(path_matriz, sheet_name=selected_days[i])
+            # Encontrar los 3 espacios más disponibles
+            top_espacios_disponibles = matriz_df.unstack().sort_values()[:10]
+            top_espacios_disponibles = pd.DataFrame(top_espacios_disponibles*100,columns=['% Miembros Ocupados'])
 
-                    # Filtra la disponibilidad solo para los miembros seleccionados en "DATA"
-                    filtered_day_df = day_df[day_df['NOMBRE'].isin(filtered_data['NOMBRE'])]
+            # Mostrar los 3 espacios más disponibles
+            st.title('Los espacios más disponibles:')
+            st.dataframe(top_espacios_disponibles)
 
-                    # Muestra de disponibilidad horaria para el día seleccionado
-                    st.write(f'Disponibilidad para el día {selected_days[i]}')
-                    st.dataframe(filtered_day_df)
+            button = st.button('Matrices por Día y Miembro',key='b1')
+            if button:
+                days_tabs = st.tabs(selected_days)
+                # Carga de la hoja de disponibilidad del día seleccionado
+                for i,tab in enumerate(days_tabs):
+                    with tab:
+                        day_df = pd.read_excel(path_matriz, sheet_name=selected_days[i])
+
+                        # Filtra la disponibilidad solo para los miembros seleccionados en "DATA"
+                        filtered_day_df = day_df[day_df['NOMBRE'].isin(filtered_data['NOMBRE'])]
+
+                        # Muestra de disponibilidad horaria para el día seleccionado
+                        st.write(f'Disponibilidad para el día {selected_days[i]}')
+                        st.dataframe(filtered_day_df)
+            with st.expander("Ver Info de miembros seleccionados"):
+                # Muestra de disponibilidad horaria para los miembros filtrados
+                st.dataframe(filtered_data)
     else:
         st.write(f'Debes Seleccionar Filtros')
     
