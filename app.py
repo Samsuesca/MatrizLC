@@ -2,6 +2,8 @@ import streamlit as st
 import pandas as pd
 
 path_matriz = 'MATRIZ LC.xlsx'
+st.title('Matriz Disponibilidad LC')
+st.emoji("🦉")
 
 # Diccionario de coordinaciones por áreas
 coordinaciones_areas = {
