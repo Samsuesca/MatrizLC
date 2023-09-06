@@ -2,8 +2,12 @@ import streamlit as st
 import pandas as pd
 
 path_matriz = 'MATRIZ LC.xlsx'
+st.set_page_config(page_title='MATRIZ LC EAFIT',
+                    page_icon=':owl:',
+                    layout='wide')
+
 st.title('Matriz Disponibilidad LC')
-st.emoji("🦉")
+
 
 # Diccionario de coordinaciones por áreas
 coordinaciones_areas = {
