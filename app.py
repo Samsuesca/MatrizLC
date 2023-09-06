@@ -15,7 +15,7 @@ coordinaciones_areas = {
     'IGV': ['SALES', 'IR/PXP','VP'],
     'IGTa': ['SALES', 'B2B', 'IR/PXP','VP'],
     'FNZ & LM': ['Gobernabilidad', 'Sostenibilidad','VP'],
-    'B2C': ['X', 'Y', 'Z','VP'],
+    'B2C': ['PDY', 'OGX','VP'],
     'OGTa': ['Consideration', 'IR', 'PXP','VP'],
     'OGV': ['Consideration', 'IR/PXP','VP'],'LCP':['LCP']
 }
